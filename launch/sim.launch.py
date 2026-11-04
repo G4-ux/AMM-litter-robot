@@ -1,0 +1,21 @@
+"""Launch sensors, SLAM, and Nav2 without autonomous litter collection."""
+
+import os
+
+from ament_index_python.packages import get_package_share_directory
+from launch import LaunchDescription
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+
+
+def generate_launch_description():
+    package_share = get_package_share_directory('autonomous_mobile_manipulator')
+    return LaunchDescription([
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(os.path.join(package_share, 'launch', 'mission.launch.py')),
+            launch_arguments={
+                'autonomous_roam': 'false',
+                'use_rviz': 'true',
+            }.items(),
+        ),
+    ])
